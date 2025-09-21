@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone_number', 20)->unique()->nullable();
             $table->date('hire_date')->nullable();
-            $table->foreignId('role_id')->constrained('roles', 'role_id')->onDelete('restrict');
+            $table->string('role_name', 50)->unique();
             $table->timestamps();
         });
     }
