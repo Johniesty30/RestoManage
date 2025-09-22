@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id('ingredient_id');
-            $table->string('name', 150);
-            $table->decimal('stock_quantity', 10, 2)->default(0);
-            $table->string('unit', 20); // e.g., 'kg', 'liter', 'pcs'
-            $table->decimal('reorder_level', 10, 2)->nullable();
+            $table->string('name');
+            $table->string('unit');                      // <-- TAMBAHKAN INI
+            $table->decimal('stock', 8, 2)->default(0); // <-- TAMBAHKAN INI
             $table->timestamps();
         });
     }

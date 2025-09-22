@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('staff', function (Blueprint $table) {
             $table->id('staff_id');
             $table->string('name');
-            $table->string('phone_number', 20)->unique()->nullable();
-            $table->date('hire_date')->nullable();
-            $table->string('role_name', 50)->unique();
+            $table->string('position');       // <-- TAMBAHKAN INI
+            $table->string('email')->unique();  // <-- TAMBAHKAN INI
+            $table->string('phone')->nullable(); // <-- TAMBAHKAN INI
             $table->timestamps();
         });
     }

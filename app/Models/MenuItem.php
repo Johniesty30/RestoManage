@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Pastikan ini ada
 
 class MenuItem extends Model
 {
@@ -12,22 +12,17 @@ class MenuItem extends Model
 
     protected $primaryKey = 'item_id';
 
-    protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'is_available',
-        'category_id',
-    ];
-
-    protected $casts = [
-        'price' => 'decimal:2',
-        'is_available' => 'boolean',
-        'category_id' => 'integer',
-    ];
-
-    public function category(): BelongsTo
+    // PASTIKAN FUNGSI DI BAWAH INI ADA DI DALAM CLASS
+    /**
+     * The ingredients that belong to the MenuItem.
+     */
+    public function ingredients(): BelongsToMany
     {
-        return $this->belongsTo(MenuCategory::class, 'category_id', 'category_id');
+        return $this->belongsToMany(
+            Ingredient::class,
+            'menu_item_ingredients',
+            'item_id',
+            'ingredient_id'
+        )->withPivot('quantity_required');
     }
 }

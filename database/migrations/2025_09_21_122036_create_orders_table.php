@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
-            $table->foreignId('customer_id')->nullable()->constrained('customers', 'customer_id')->onDelete('set null');
-            $table->foreignId('staff_id')->constrained('staff', 'staff_id')->onDelete('restrict');
-            $table->foreignId('table_id')->nullable()->constrained('tables', 'table_id')->onDelete('set null');
-            $table->string('order_type', 20)->default('Dine-in'); // 'Dine-in' or 'Takeaway'
-            $table->string('order_status', 20)->default('Pending'); // 'Pending', 'Preparing', 'Served', 'Paid'
+            $table->foreignId('customer_id')->constrained('customers', 'customer_id');
+            $table->foreignId('staff_id')->constrained('staff', 'staff_id');
+            $table->foreignId('table_id')->constrained('tables', 'table_id');
             $table->timestamp('order_time')->useCurrent();
-            $table->decimal('total_amount', 12, 2)->nullable();
+            $table->string('status')->default('pending'); // <-- TAMBAHKAN INI
+            $table->decimal('total_price', 10, 2);      // <-- TAMBAHKAN INI
             $table->timestamps();
         });
     }

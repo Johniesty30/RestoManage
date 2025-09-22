@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Pastikan ini ada
 
 class Ingredient extends Model
 {
@@ -12,23 +12,15 @@ class Ingredient extends Model
 
     protected $primaryKey = 'ingredient_id';
 
-    protected $fillable = [
-        'name',
-        'stock_quantity',
-        'unit',
-        'reorder_level',
-    ];
-
-    protected $casts = [
-        'stock_quantity' => 'decimal:2',
-        'reorder_level' => 'decimal:2',
-    ];
-
+    // PASTIKAN FUNGSI DI BAWAH INI ADA DI DALAM CLASS
+    /**
+     * The menu items that belong to the Ingredient.
+     */
     public function menuItems(): BelongsToMany
     {
         return $this->belongsToMany(
             MenuItem::class,
-            'ingredient_menu_item',
+            'menu_item_ingredients',
             'ingredient_id',
             'item_id'
         );

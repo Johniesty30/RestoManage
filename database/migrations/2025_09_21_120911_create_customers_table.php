@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id');
             $table->string('name');
-            $table->string('phone_number', 20)->unique();
-            $table->string('email')->unique()->nullable();
-            $table->integer('loyalty_points')->default(0);
+            $table->string('email')->unique();
+            $table->string('phone')->nullable(); // <-- TAMBAHKAN BARIS INI
             $table->timestamps();
         });
     }
