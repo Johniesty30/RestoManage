@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id('reservation_id');
-            $table->foreignId('customer_id')->constrained('customers', 'customer_id')->onDelete('cascade');
-            $table->foreignId('table_id')->constrained('tables', 'table_id')->onDelete('restrict');
+            $table->foreignId('customer_id')->constrained('customers', 'customer_id');
+            $table->foreignId('table_id')->constrained('tables', 'table_id');
             $table->timestamp('reservation_time');
-            $table->integer('number_of_guests');
-            $table->string('status', 20)->default('Confirmed'); // 'Confirmed', 'Cancelled', 'Completed'
+
+            // TAMBAHKAN BARIS INI
+            $table->integer('party_size');
+
+            $table->string('status');
             $table->timestamps();
         });
     }
