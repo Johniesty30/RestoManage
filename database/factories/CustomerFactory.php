@@ -19,7 +19,8 @@ class CustomerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone_number' => $this->faker->phoneNumber(),
+            'loyalty_points' => $this->faker->numberBetween(0, 1000),
         ];
     }
 }
