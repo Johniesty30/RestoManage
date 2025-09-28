@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('email');
+            $table->foreign('email')->references('email')->on('users')->onDelete('cascade');
             $table->string('phone_number', 20)->unique();
             $table->integer('loyalty_points')->default(0);
             $table->timestamps();

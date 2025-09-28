@@ -134,6 +134,7 @@ class DatabaseSeeder extends Seeder
 
         Customer::create([
             'user_id' => $customerUser->id,
+            'email' => $customerUser->email, // ✅ ambil email dari tabel users
             'phone_number' => '1234567895',
             'loyalty_points' => 100,
         ]);
