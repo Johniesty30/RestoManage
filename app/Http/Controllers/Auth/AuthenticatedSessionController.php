@@ -8,17 +8,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(): View
     {
-        return Inertia::render('Auth/Login', [
+        return view('auth.login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
@@ -59,15 +58,15 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('staff.admin.dashboard');
         } elseif ($user->isManager()) {
-            return redirect()->route('manager.dashboard');
+            return redirect()->route('staff.dashboard');
         } elseif ($user->isChef()) {
-            return redirect()->route('chef.dashboard');
+            return redirect()->route('staff.dashboard');
         } elseif ($user->isWaiter()) {
-            return redirect()->route('waiter.dashboard');
+            return redirect()->route('staff.dashboard');
         } elseif ($user->isCashier()) {
-            return redirect()->route('cashier.dashboard');
+            return redirect()->route('staff.dashboard');
         } elseif ($user->isCustomer()) {
             return redirect()->route('customer.dashboard');
         }

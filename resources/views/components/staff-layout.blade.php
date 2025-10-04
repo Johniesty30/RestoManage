@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }} - Staff Portal</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -16,17 +16,17 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            <!-- Simple Navigation -->
+            <!-- Simple Staff Navigation -->
             <nav class="bg-white shadow">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
-                            <a href="{{ route('dashboard') }}" class="text-xl font-semibold">
-                                {{ config('app.name', 'Laravel') }}
+                            <a href="{{ route('staff.dashboard') }}" class="text-xl font-semibold">
+                                {{ config('app.name', 'Laravel') }} - Staff
                             </a>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <span class="text-gray-700">{{ Auth::user()->name }}</span>
+                            <span class="text-gray-700">{{ Auth::user()->name }} ({{ Auth::user()->role }})</span>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="text-gray-600 hover:text-gray-900">

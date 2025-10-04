@@ -9,8 +9,6 @@ class Kernel extends HttpKernel
     /**
      * The application's global HTTP middleware stack.
      *
-     * These middleware are run during every request to your application.
-     *
      * @var array<int, class-string|string>
      */
     protected $middleware = [
@@ -39,42 +37,18 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-    ];
-    protected $routeMiddleware = [
-        // ... middleware default ...
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-
-        // Custom Middleware untuk roles
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'manager' => \App\Http\Middleware\ManagerMiddleware::class,
-        'chef' => \App\Http\Middleware\ChefMiddleware::class,
-        'waiter' => \App\Http\Middleware\WaiterMiddleware::class,
-        'cashier' => \App\Http\Middleware\CashierMiddleware::class,
-        'customer' => \App\Http\Middleware\CustomerMiddleware::class,
-        'staff' => \App\Http\Middleware\StaffMiddleware::class,
     ];
 
     /**
      * The application's middleware aliases.
      *
-     * Aliases may be used instead of class names to conveniently assign middleware to routes and groups.
-     *
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        // Laravel default
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
@@ -86,5 +60,14 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // Custom Role Middleware
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'staff' => \App\Http\Middleware\StaffMiddleware::class,
+        'customer' => \App\Http\Middleware\CustomerMiddleware::class,
+        'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+        'chef' => \App\Http\Middleware\ChefMiddleware::class,
+        'waiter' => \App\Http\Middleware\WaiterMiddleware::class,
+        'cashier' => \App\Http\Middleware\CashierMiddleware::class,
     ];
 }

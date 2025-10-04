@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,9 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register', [
-            'roles' => ['customer'] // Default hanya customer bisa register sendiri
-        ]);
+        return view('auth.register');
     }
 
     /**
@@ -35,22 +34,18 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:customer'], // Hanya customer yang bisa register sendiri
-            'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'phone' => $request->phone,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('customer.dashboard', absolute: false));
+        return redirect(RouteServiceProvider::HOME);
     }
 }

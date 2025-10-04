@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class StaffMiddleware
@@ -15,6 +16,21 @@ class StaffMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user();
+
+        if ($user->isStaff()) {
+            return $next($request);
+        }
+
+        // Jika customer mencoba akses staff portal, redirect ke customer dashboard
+        if ($user->isCustomer()) {
+            return redirect()->route('customer.dashboard');
+        }
+
+        abort(403, 'Unauthorized access.');
     }
 }

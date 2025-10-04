@@ -13,6 +13,8 @@ class Table extends Model
         'table_number',
         'capacity',
         'status',
+        'location', // Tambahkan
+        'description', // Tambahkan
     ];
 
     protected $casts = [
@@ -51,6 +53,12 @@ class Table extends Model
         return $query->where('capacity', '>=', $minCapacity);
     }
 
+    // Tambahkan scope untuk active tables (exclude maintenance)
+    public function scopeActive($query)
+    {
+        return $query->where('status', '!=', 'maintenance');
+    }
+
     // Methods
     public function isAvailable()
     {
@@ -65,5 +73,16 @@ class Table extends Model
     public function isReserved()
     {
         return $this->status === 'reserved';
+    }
+
+    // Tambahkan method untuk mendapatkan status color
+    public function getStatusColorAttribute()
+    {
+        return [
+            'available' => 'green',
+            'occupied' => 'orange',
+            'reserved' => 'purple',
+            'maintenance' => 'gray'
+        ][$this->status] ?? 'gray';
     }
 }
