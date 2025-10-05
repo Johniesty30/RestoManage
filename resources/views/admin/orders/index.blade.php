@@ -34,7 +34,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $order->table->table_number ?? 'N/A' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $order->staff->name ?? 'N/A' }}</td>
                                     {{-- PERBAIKAN: Menggunakan total_amount --}}
-                                    <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">USD {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                             @if($order->status == 'pending') bg-yellow-100 text-yellow-800 @elseif($order->status == 'paid') bg-green-100 text-green-800 @else bg-red-100 text-red-800 @endif">

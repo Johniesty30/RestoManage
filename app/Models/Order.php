@@ -14,32 +14,20 @@ class Order extends Model
         'staff_id',
         'table_id',
         'order_number',
-        'total_amount', // Pastikan ini sesuai dengan nama kolom di database
+        'total_amount',
         'status',
-        'order_date',
+        'order_time',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    // TAMBAHKAN PROPERTI DI BAWAH INI
     protected $casts = [
-        'order_date' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'order_time' => 'datetime',
     ];
-
-    // Accessor untuk total_amount jika view menggunakan nama ini
-    public function getTotalAmountAttribute()
-    {
-        return $this->total_price;
-    }
-
-    public function items()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
-
-    public function table()
-    {
-        return $this->belongsTo(Table::class);
-    }
 
     public function customer()
     {
@@ -51,8 +39,13 @@ class Order extends Model
         return $this->belongsTo(User::class, 'staff_id');
     }
 
-    public function user()
+    public function table()
     {
-        return $this->belongsTo(User::class, 'customer_id');
+        return $this->belongsTo(Table::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

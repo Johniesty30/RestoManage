@@ -37,48 +37,47 @@ class OrderController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
         ]);
 
-        $totalAmount = 0; // Ganti nama variabel agar konsisten
-        foreach ($request->items as $item) {
-            $menuItem = MenuItem::find($item['menu_item_id']);
-            $totalAmount += $menuItem->price * $item['quantity'];
-        }
-
-        // --- PERBAIKAN ---
-        // Membuat nomor pesanan unik secara otomatis
+        // Membuat nomor pesanan unik
         $today = Carbon::now()->format('Ymd');
         $orderCountToday = Order::whereDate('created_at', Carbon::today())->count();
         $nextOrderNumber = $orderCountToday + 1;
         $orderNumber = 'ORD-' . $today . '-' . str_pad($nextOrderNumber, 4, '0', STR_PAD_LEFT);
-        // --- SELESAI PERBAIKAN ---
 
+        // Buat pesanan dengan total_amount awal 0
         $order = Order::create([
             'table_id' => $request->table_id,
             'customer_id' => auth()->user()->id,
             'staff_id' => $request->staff_id,
-            // --- PERBAIKAN ---
-            // Menambahkan order_number ke data yang disimpan
             'order_number' => $orderNumber,
-            // --- SELESAI PERBAIKAN ---
-            'total_amount' => $totalAmount,
+            'total_amount' => 0, // Inisialisasi total amount
             'status' => 'pending',
             'order_time' => Carbon::now(),
         ]);
 
+        $totalAmount = 0;
         foreach ($request->items as $item) {
             $menuItem = MenuItem::find($item['menu_item_id']);
+            $subtotal = $menuItem->price * $item['quantity'];
+            
             $order->items()->create([
                 'menu_item_id' => $item['menu_item_id'],
                 'quantity' => $item['quantity'],
-                'price' => $menuItem->price,
+                'unit_price' => $menuItem->price, // Menggunakan 'unit_price'
+                'subtotal' => $subtotal,
             ]);
+
+            $totalAmount += $subtotal;
         }
+
+        // Update total_amount pada pesanan
+        $order->total_amount = $totalAmount;
+        $order->save();
 
         $table = Table::find($request->table_id);
         $table->update(['status' => 'occupied']);
 
         return redirect()->route('staff.orders.index')->with('success', 'Order created successfully.');
     }
-
     public function show(Order $order)
     {
         $order->load('items.menuItem', 'table', 'customer', 'staff');

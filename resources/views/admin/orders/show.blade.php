@@ -27,7 +27,7 @@
                                 {{ ucfirst($order->status) }}
                             </span></p>
                             {{-- PERBAIKAN: Menggunakan total_amount --}}
-                            <p class="text-xl font-bold">Total: Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                            <p class="text-xl font-bold">Total: USD {{ number_format($order->total_amount, 0, ',', '.') }}</p>
                         </div>
                     </div>
 
@@ -48,8 +48,8 @@
                                     {{-- Pastikan relasi menuItem ada di model OrderItem --}}
                                     <td class="px-6 py-4">{{ $item->menuItem->name ?? 'Item not found' }}</td>
                                     <td class="px-6 py-4 text-center">{{ $item->quantity }}</td>
-                                    <td class="px-6 py-4 text-right">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 text-right">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+                                    <td class="px-6 py-4 text-right">USD {{ number_format($item->unit_price, 0, ',', '.') }}</td>
+                                    <td class="px-6 py-4 text-right">USD {{ number_format($item->subtotal, 0, ',', '.') }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

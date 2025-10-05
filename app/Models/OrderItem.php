@@ -54,12 +54,12 @@ class OrderItem extends Model
             if (empty($orderItem->unit_price)) {
                 $orderItem->unit_price = $orderItem->menuItem->price;
             }
-            if (empty($orderItem->subtotal)) {
-                $orderItem->subtotal = $orderItem->unit_price * $orderItem->quantity;
-            }
+            // Pastikan subtotal dihitung saat pembuatan
+            $orderItem->subtotal = $orderItem->unit_price * $orderItem->quantity;
         });
 
         static::updating(function ($orderItem) {
+            // Hitung ulang subtotal saat ada pembaruan
             $orderItem->subtotal = $orderItem->unit_price * $orderItem->quantity;
         });
     }
