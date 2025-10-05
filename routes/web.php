@@ -106,20 +106,17 @@ Route::prefix('staff')->name('staff.')->middleware(['auth', 'staff'])->group(fun
         });
         
         // Reservation Management Routes
-        Route::prefix('reservations')->name('reservations.')->group(function () {
-            Route::get('/', [ReservationController::class, 'index'])->name('index');
-            Route::get('/create', [ReservationController::class, 'create'])->name('create');
-            Route::post('/', [ReservationController::class, 'store'])->name('store');
-            Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
-            Route::get('/{reservation}/edit', [ReservationController::class, 'edit'])->name('edit');
-            Route::put('/{reservation}', [ReservationController::class, 'update'])->name('update');
-            Route::delete('/{reservation}', [ReservationController::class, 'destroy'])->name('destroy');
-            Route::patch('/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('cancel');
-            Route::patch('/{reservation}/mark-seated', [ReservationController::class, 'markAsSeated'])->name('mark-seated');
-            Route::patch('/{reservation}/mark-completed', [ReservationController::class, 'markAsCompleted'])->name('mark-completed');
-            Route::get('/reservations/calendar', [ReservationController::class, 'calendar'])->name('`calendar');
-            Route::post('/auto-assign', [ReservationController::class, 'autoAssign'])->name('auto-assign');
-        });
+         Route::prefix('reservations')->name('reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');
+        Route::get('/calendar', [ReservationController::class, 'calendar'])->name('calendar');
+        Route::get('/create', [ReservationController::class, 'create'])->name('create');
+        Route::post('/', [ReservationController::class, 'store'])->name('store');
+        Route::post('/auto-assign', [ReservationController::class, 'autoAssign'])->name('auto-assign'); // TAMBAHKAN BARIS INI
+        Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
+        Route::get('/{reservation}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::put('/{reservation}', [ReservationController::class, 'update'])->name('update');
+        Route::delete('/{reservation}', [ReservationController::class, 'destroy'])->name('destroy');
+    });
 
         // Order Management Routes (BARU)
         Route::prefix('orders')->name('orders.')->group(function () {

@@ -83,4 +83,35 @@ class OrderController extends Controller
         $order->load('items.menuItem', 'table', 'customer', 'staff');
         return view('admin.orders.show', compact('order'));
     }
+     public function edit(Order $order)
+    {
+        $tables = Table::all();
+        $waiters = User::where('role', 'waiter')->get();
+        return view('admin.orders.edit', compact('order', 'tables', 'waiters'));
+    }
+
+    public function update(Request $request, Order $order)
+    {
+        $request->validate([
+            'table_id' => 'required|exists:tables,id',
+            'staff_id' => 'required|exists:users,id',
+            'status' => 'required|in:pending,paid,cancelled',
+        ]);
+
+        $order->update([
+            'table_id' => $request->table_id,
+            'staff_id' => $request->staff_id,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('staff.orders.index')->with('success', 'Order updated successfully.');
+    }
+
+    public function destroy(Order $order)
+    {
+        $order->items()->delete();
+        $order->delete();
+
+        return redirect()->route('staff.orders.index')->with('success', 'Order deleted successfully.');
+    }
 }

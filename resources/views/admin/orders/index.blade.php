@@ -43,6 +43,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                        <a href="{{ route('staff.orders.show', $order->id) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                       <a href="{{ route('staff.orders.edit', $order->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <form class="inline-block" action="{{ route('staff.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
