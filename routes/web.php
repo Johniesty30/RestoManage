@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MenuItemController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Admin\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,12 +51,8 @@ Route::prefix('staff')->name('staff.')->middleware(['auth', 'staff'])->group(fun
             Route::get('/{inventoryItem}/edit', [InventoryController::class, 'edit'])->name('edit');
             Route::put('/{inventoryItem}', [InventoryController::class, 'update'])->name('update');
             Route::delete('/{inventoryItem}', [InventoryController::class, 'destroy'])->name('destroy');
-
-            // Stock management routes
             Route::get('/{inventoryItem}/stock-update', [InventoryController::class, 'showStockUpdate'])->name('stock-update');
             Route::post('/{inventoryItem}/update-stock', [InventoryController::class, 'updateStock'])->name('update-stock');
-
-            // Reports
             Route::get('/reports/stock', [InventoryController::class, 'reports'])->name('reports');
         });
 
@@ -107,6 +104,7 @@ Route::prefix('staff')->name('staff.')->middleware(['auth', 'staff'])->group(fun
             Route::get('/availability/checker', [TableController::class, 'showAvailabilityChecker'])->name('availability-checker');
             Route::post('/availability/check', [TableController::class, 'checkAvailability'])->name('check-availability');
         });
+        
         // Reservation Management Routes
         Route::prefix('reservations')->name('reservations.')->group(function () {
             Route::get('/', [ReservationController::class, 'index'])->name('index');
@@ -121,6 +119,17 @@ Route::prefix('staff')->name('staff.')->middleware(['auth', 'staff'])->group(fun
             Route::patch('/{reservation}/mark-completed', [ReservationController::class, 'markAsCompleted'])->name('mark-completed');
             Route::get('/reservations/calendar', [ReservationController::class, 'calendar'])->name('`calendar');
             Route::post('/auto-assign', [ReservationController::class, 'autoAssign'])->name('auto-assign');
+        });
+
+        // Order Management Routes (BARU)
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/', [OrderController::class, 'index'])->name('index');
+            Route::get('/create', [OrderController::class, 'create'])->name('create');
+            Route::post('/', [OrderController::class, 'store'])->name('store');
+            Route::get('/{order}', [OrderController::class, 'show'])->name('show');
+            Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('edit');
+            Route::put('/{order}', [OrderController::class, 'update'])->name('update');
+            Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
         });
     });
 });

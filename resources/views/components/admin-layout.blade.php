@@ -26,17 +26,15 @@
                 <nav class="mt-6">
                     <div class="px-4 space-y-2">
                         <!-- Dashboard -->
-                        <a href="{{ route('staff.dashboard') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.admin.dashboard') ? 'bg-gray-700 text-white' : '' }}">
+                        <a href="{{ route('staff.dashboard') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.dashboard') ? 'bg-gray-700 text-white' : '' }}">
                             📊 Dashboard
                         </a>
 
                         <!-- User Management -->
-                       <!-- User Management -->
                         <a href="{{ route('staff.users.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.users.*') ? 'bg-gray-700 text-white' : '' }}">
                             👥 Users
                         </a>
 
-                        <!-- Menu Management -->
                         <!-- Menu Management -->
                         <div class="px-4 py-2 text-gray-400 text-sm font-medium">Menu Management</div>
                         <a href="{{ route('staff.categories.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.categories.*') ? 'bg-gray-700 text-white' : '' }}">
@@ -56,10 +54,12 @@
                             🪑 Tables
                         </a>
 
+                        <!-- DIUBAH -->
                         <!-- Orders -->
-                        <a href="#" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg">
+                        <a href="{{ route('staff.orders.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.orders.*') ? 'bg-gray-700 text-white' : '' }}">
                             🛒 Orders
                         </a>
+                        <!-- SELESAI DIUBAH -->
 
                         <!-- Reservations -->
                         <a href="{{ route('staff.reservations.index') }}" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.reservations.*') ? 'bg-gray-700 text-white' : '' }}">
