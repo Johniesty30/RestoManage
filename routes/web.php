@@ -128,6 +128,11 @@ Route::prefix('staff')->name('staff.')->middleware(['auth', 'staff'])->group(fun
             Route::put('/{order}', [OrderController::class, 'update'])->name('update');
             Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
         });
+
+        // Rute untuk Laporan
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/sales', [App\Http\Controllers\Admin\ReportController::class, 'sales'])->name('sales');
+});
     });
 });
 

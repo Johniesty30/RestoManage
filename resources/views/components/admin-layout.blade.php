@@ -67,9 +67,19 @@
                         </a>
 
                         <!-- Reports -->
-                        <a href="#" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg">
-                            📈 Reports
-                        </a>
+                        <div x-data="{ open: {{ request()->routeIs('staff.reports.*') || request()->routeIs('staff.inventory.reports') ? 'true' : 'false' }} }">
+                        <button @click="open = !open" class="flex items-center justify-between w-full px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg">
+                            <span>📈 Reports</span>
+                            <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'transform rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="open" class="pl-4">
+                            <a href="{{ route('staff.reports.sales') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.reports.sales') ? 'bg-gray-700' : '' }}">
+                                Laporan Penjualan
+                            </a>
+                            <a href="{{ route('staff.inventory.reports') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg {{ request()->routeIs('staff.inventory.reports') ? 'bg-gray-700' : '' }}">
+                                Laporan Inventaris
+                            </a>
+                        </div>
                     </div>
                 </nav>
             </div>
